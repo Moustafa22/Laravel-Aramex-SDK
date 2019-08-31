@@ -196,11 +196,10 @@ composer require octw/aramex
               },
               "ShipmentThirdPartyProcessedObject": null
           }
-      }
-  }
+      }}
+  Sample Code
    
-```
-    Sample Code
+    
     
 ```php  
         $anotherData = Aramex::createShipment([
