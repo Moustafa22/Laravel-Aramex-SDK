@@ -1,7 +1,7 @@
 {
     "name": "octw/aramex",
     "description": "A Library to integrate with Aramex APIs",
-    "type": "library",
+    "type": "pachage",
     "authors": [
         {
             "name": "Moustafa Allahham",
@@ -9,7 +9,6 @@
         }
     ],
     "require": {
-    	""
     },
      "extra": {
         "laravel": {
