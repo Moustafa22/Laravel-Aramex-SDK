@@ -1,0 +1,26 @@
+{
+    "name": "octw/aramex",
+    "description": "A Library to integrate with Aramex APIs",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Moustafa Allahham",
+            "email": "iteng.moustafa@gmail.com"
+        }
+    ],
+    "require": {
+    	""
+    },
+     "extra": {
+        "laravel": {
+            "providers": [
+                "octw\\aramex\\src\\AramexServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "octw\\aramex\\": "src/"
+        }
+    }
+}
