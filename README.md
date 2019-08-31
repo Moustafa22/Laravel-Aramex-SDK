@@ -16,12 +16,12 @@ composer require octw/aramex
 
 ## A Brief Documentation
 
-  First you should read the official aramex documentation, understand the flow of their API's and parameters and decide the main puroposes    of using aramex API.
+  First you should read the official aramex documentation, understand the flow of their API's and parameters and decide the main puroposes of using aramex API.<br />
   doucmentation link: https://www.aramex.com/docs/default-source/resourses/resourcesdata/shipping-services-api-manual.pdf
   
-  However, The integration has 2 main functions:
-      - Create Pickup.
-      - Create Shipment.
+  However, The integration has 2 main functions:<br />
+      - Create Pickup.<br />
+      - Create Shipment.<br />
      
   
   
@@ -198,10 +198,11 @@ composer require octw/aramex
           }
       }
   }
-    
-    Sample Code
+   
 ```
+    Sample Code
     
+```php  
         $anotherData = Aramex::createShipment([
             'shipper' => [
                 'name' => 'Steve',
