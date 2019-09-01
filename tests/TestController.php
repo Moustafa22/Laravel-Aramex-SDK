@@ -7,7 +7,6 @@ use Octw\Aramex\Aramex;
 
 class TestController extends Controller
 {
-    //
     public function testRoute(){
 
         //  Creating shipmets requires pickups so we create pickups and save it's Guid to pass it to shipment creation method 
