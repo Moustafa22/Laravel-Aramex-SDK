@@ -3,7 +3,7 @@
     "description": "A Library to integrate with Aramex APIs",
     "type": "pachage",
     "keywords": ["aramex", "sdk", "php", "laravel", "shipping", "integraiton", "ship"],
-    "license": "LICENCE",
+    "license": "MIT",
     "authors": [
         {
             "name": "Moustafa Allahham",
