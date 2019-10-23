@@ -40,7 +40,13 @@ class Aramex
 
             // prepare return object with errors described in call response.
             $ret->error = 1;
-            $ret->errors = $call->Notifications['Notification'];
+            // No one knows what is the structure of the response 
+            if (is_array($call->Notifications)){
+                $ret->errors = $call->Notifications['Notification'];
+            }
+            else {
+                $ret->errors = $call->Notifications->Notification;
+            }
         }
         else {
         	
