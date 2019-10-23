@@ -13,16 +13,19 @@
     ],
     "require": {
     },
-     "extra": {
-        "laravel": {
-            "providers": [
-                "octw\\aramex\\src\\AramexServiceProvider"
-            ]
-        }
-    },
     "autoload": {
         "psr-4": {
-            "octw\\aramex\\": "src/"
+            "Octw\\Aramex\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Octw\\Aramex\\AramexServiceProvider"
+            ],
+            "aliases": {
+                "Aramex": "Octw\\Aramex\\Aramex"
+            }
         }
     }
 }
