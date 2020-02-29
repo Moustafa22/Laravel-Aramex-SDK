@@ -19,6 +19,23 @@ composer require octw/aramex
   First you should read the official aramex documentation, understand the flow of their API's and parameters and decide the main puroposes of using aramex API.<br />
   doucmentation link: https://www.aramex.com/docs/default-source/resourses/resourcesdata/shipping-services-api-manual.pdf
   
+  You can use the Aramex interface through: <br />
+  
+  ```php
+  use Octw\Aramex\Aramex;
+  ```
+  or add it to Aliases in config/app.php file <br />
+  
+  ```php
+  'Aramex' => Octw\Aramex\Aramex::class,
+  ```
+  
+  then
+  
+  ```php
+    use Aramex;
+  ```
+  
   However, The integration has 2 main functions:<br />
       - Create Pickup.<br />
       - Create Shipment.<br />
