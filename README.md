@@ -7,6 +7,11 @@ Aramex open source Laravel SDK to integrate with Aramex API's.
 ``` bash
 composer require octw/aramex
 ```
+  
+  > Note that this package require `SOAP` extension on your server.<br>
+  > Refer to those link for installation <br>
+  > [php.net](https://www.php.net/manual/en/soap.installation.php) <br>
+  > [digitalocean.com](https://www.digitalocean.com/community/questions/digital-ocean-a-soapclient-installation)
 
 ## Configurations
 
