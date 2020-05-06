@@ -7,6 +7,11 @@ Aramex open source Laravel SDK to integrate with Aramex API's.
 ``` bash
 composer require octw/aramex
 ```
+
+  To publish the package and create config file `aramex.php` run this command
+  ``` bash
+  php artisan vendor:publish --provider="Octw\Aramex\AramexServiceProvider"
+  ```
   
   > Note that this package require `SOAP` extension on your server.<br>
   > Refer to those link for installation <br>
