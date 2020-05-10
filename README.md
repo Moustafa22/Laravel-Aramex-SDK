@@ -46,9 +46,11 @@ composer require octw/aramex
     use Aramex;
   ```
   
-  However, The integration has 2 main functions:<br />
+  However, The integration has 4 main functions:<br />
       - Create Pickup.<br />
+      - Cancel Pickup. <br />
       - Create Shipment.<br />
+      - Calculate Rate. <br />
      
   
   
@@ -56,7 +58,7 @@ composer require octw/aramex
 
   takes array of parameters
   
-    ```
+``` php
     "name" => 'John' // User’s Name, Sent By or in the case of the consignee, to the Attention of.
     "cell_phone" => '+123456789' // Phone Number
     "phone" => '+123456789' // Phone Number
@@ -75,8 +77,10 @@ composer require octw/aramex
     "pickup_location" => 'at company's reception' // location details
     "weight" => 12 // wieght of the pickup (in KG)
     "volume" => 80 // volume of the pickup  (in CM^3)
-    
-     return stdClass :  
+```
+
+   return stdClass :  
+``` json
      {
       "error": 0,
       "pickupGUID": "4e29b471-0ed8-4ba8-ac0e-fddedfb6beec",
@@ -89,10 +93,10 @@ composer require octw/aramex
         // Aramex's response errors
       ]
      }
+```
       
-      
-    Sample Code :
-    
+   Sample Code :
+``` php 
     $data = Aramex::createPickup([
     		'name' => 'MyName',
     		'cell_phone' => '+123123123',
@@ -117,13 +121,13 @@ composer require octw/aramex
         // extracting GUID
        if (!$data->error)
           $guid = $data->pickupGUID;
-    ```
+```
     
     
 ### Create Shipment Method
 
   takes array of parameters
-  ```php
+```php
             'shipper' => [
                 'name' => 'Steve', 
                 'email' => 'email@users.companies', 
@@ -157,7 +161,9 @@ composer require octw/aramex
             'number_of_pieces' => 1,  // number of boxes
             'description' => 'Goods Description, like Boxes of flowers', // description
 ```
-    retrun stdClass:
+
+   retrun stdClass:
+``` json
     {
       "Transaction": {
           "Reference1": "",
@@ -223,10 +229,11 @@ composer require octw/aramex
               },
               "ShipmentThirdPartyProcessedObject": null
           }
-      }}
-  Sample Code
-   
-    
+      }
+   }
+```
+
+  Sample Code    
     
 ```php  
         $anotherData = Aramex::createShipment([
@@ -264,6 +271,125 @@ composer require octw/aramex
             'description' => 'Goods Description, like Boxes of flowers',
         ]);
 ```
+
+### Calculate Rate
+
+  Calculate Rate API is used to get shipment pricing and details before you ship it. <br />
+  
+  it takes 4 parameters:<br />
+  `Aramex::calculateRate($originAddress, $destinationAddress, $shipementDetails, $currency)` <br /><br />
+  `$originAddress` and `$destinationAddress` are both arrays as follows: <br />
+  
+  
+``` php
+    [
+        'line_1' => 'String|Required',
+        'line_2' => 'String',
+        'line_3' => 'String',
+        'city' => 'String|Required',
+        'state_code' => 'String',
+        'postal_code' => 'String',
+        'country_code' => 'String|max:2|min:2|Required',
+        'longitude' => 'Double',
+        'latitude' => 'Double',
+        'building_number' => 'String',
+        'building_name' => 'String',
+    ]
+```
+  <br />
+  The `$shipmentDetails` parameter is an array describes some details about the shipment as follows:
+``` php
+    [
+        'payment_type':'', // default value in config file
+        'product_group':'', // default value in config file
+        'product_type':'', // default value in config file 
+        'weight':'Double', // IN KG (Kilograms)
+        'number_of_pieces':'Integer|Required'
+    ]
+```
+  The `$currency` is a string (3 Chars) for prefered currency calculations like `USD`,`AED`,`EUR`,`KWD` and so on. 
+  <br />
+  Sample Code 
+  
+``` php
+        $originAddress = [
+            'line_1' => 'Test string',
+            'city' => 'Amman',
+            'country_code' => 'JO'
+        ];
+
+        $destinationAddress = [
+            'line_1' => 'Test String',
+            'city' => 'Dubai',
+            'country_code' => 'AE'
+            
+        ];
+        $shipmentDetails = [
+            'weight' => 5, // KG
+            'number_of_pieces' => 2,
+            'payment_type' => 'P', // if u don't pass it, it will take the config default value 
+            'product_group' => 'EXP', // if u don't pass it, it will take the config default value
+            'product_type' => 'PPX', // if u don't pass it, it will take the config default value
+        ];
+
+        $shipmentDetails = [
+            'weight' => 5, // KG
+            'number_of_pieces' => 2,
+        ]
+        $currency = 'USD';
+        $data = Aramex::calculateRate($originAddress, $destinationAddress , $shipmentDetails , 'USD');
+        
+        if(!$data->error){
+          dd($data);
+        }
+        else{
+          // handle $data->errors
+        }
+ ```
+   
+  ###Response Object Samples<br/>
+    -Success Response:
+
+``` json
+      {
+         "Transaction":{
+            "Reference1":"",
+            "Reference2":"",
+            "Reference3":"",
+            "Reference4":"",
+            "Reference5":null
+         },
+         "Notifications":{
+
+         },
+         "HasErrors":false,
+         "TotalAmount":{
+            "CurrencyCode":"USD",
+            "Value":1004.74
+         },
+         "RateDetails":{
+            "Amount":312.34,
+            "OtherAmount1":0,
+            "OtherAmount2":0,
+            "OtherAmount3":78.08,
+            "OtherAmount4":0,
+            "OtherAmount5":475.73,
+            "TotalAmountBeforeTax":866.15,
+            "TaxAmount":138.59
+         }
+      }
+```
+    
+   -Fail Response
+    
+```json
+    {
+      "error": 1,
+      "errors": "Error strings one by one."
+    }
+```
+  
+
 MIT Licence 
 
 Copyright 2019 Octopus-Works
