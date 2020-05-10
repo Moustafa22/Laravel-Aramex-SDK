@@ -278,8 +278,7 @@ composer require octw/aramex
   
   it takes 4 parameters:<br />
   `Aramex::calculateRate($originAddress, $destinationAddress, $shipementDetails, $currency)` <br /><br />
-  `$originAddress` and `$destinationAddress` are both arrays as follows: <br />
-  
+  `$originAddress` and `$destinationAddress` are both arrays as follows: 
   
 ``` php
     [
@@ -295,9 +294,10 @@ composer require octw/aramex
         'building_number' => 'String',
         'building_name' => 'String',
     ]
-```
-  <br />
+``` 
+  
   The `$shipmentDetails` parameter is an array describes some details about the shipment as follows:
+  
 ``` php
     [
         'payment_type':'', // default value in config file
@@ -307,8 +307,10 @@ composer require octw/aramex
         'number_of_pieces':'Integer|Required'
     ]
 ```
-  The `$currency` is a string (3 Chars) for prefered currency calculations like `USD`,`AED`,`EUR`,`KWD` and so on. 
-  <br />
+  
+  The `$currency` is a string (3 Chars) for prefered currency calculations like `USD`,`AED`,`EUR`,`KWD` and so on. <br />
+  
+  
   Sample Code 
   
 ``` php
@@ -347,8 +349,8 @@ composer require octw/aramex
         }
  ```
    
-  ###Response Object Samples<br/>
-    -Success Response:
+  ### Response Object Samples<br/>
+   -Success Response:
 
 ``` json
       {
