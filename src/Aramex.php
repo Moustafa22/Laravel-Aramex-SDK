@@ -21,8 +21,18 @@ class Aramex
 	{
 		// Define an instance from the core class.
 		$aramex = new Core;
-		// Import SoapCLient object from Aramex's endpoint. 
-		$soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
+		// Import SoapCLient object from Aramex's endpoint.
+        if (config('aramex.ENV') == 'TEST') 
+        {
+            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
+        }
+        else if (config('aramex.ENV') == 'LIVE')
+        {
+            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
+        }
+        else {
+          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
+        }
 
 		// Preparation for initializing pickup request (Extract the data). 
 		$pickupAddress = AramexHelper::extractPickupAddressContact($param);     // unchangeable
@@ -71,7 +81,17 @@ class Aramex
         // Define an instance from the core class.
         $aramex = new Core;
         // Import SoapCLient object from Aramex's endpoint. 
-        $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
+        if (config('aramex.ENV') == 'TEST') 
+        {
+            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
+        }
+        else if (config('aramex.ENV') == 'LIVE')
+        {
+            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
+        }
+        else {
+          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
+        }
 
         $aramex->initializePickupCancelation($pickupGuid , $commnet);
 
@@ -100,7 +120,17 @@ class Aramex
         // Define an instance from the core class.
         $aramex = new Core;
         // Import SoapCLient object from Aramex's endpoint. 
-        $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
+        if (config('aramex.ENV') == 'TEST') 
+        {
+            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
+        }
+        else if (config('aramex.ENV') == 'LIVE')
+        {
+            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
+        }
+        else {
+          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
+        }
 
         $shipperAddress = AramexHelper::extractShipperAddressContact($param);
         $consigneeAddress = AramexHelper::extractConsigneeAddressContact($param);
@@ -125,4 +155,45 @@ class Aramex
     }
 
 
+
+    public static function calculateRate($origin , $destination , $shipmentDetails , $currency)
+    {
+
+        $aramex = new Core;
+
+        if (config('aramex.ENV') == 'TEST') 
+        {
+            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/RateCalculator/Service_1_0.svc?singleWsdl');
+        }
+        else if (config('aramex.ENV') == 'LIVE')
+        {
+            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/RateCalculator/Service_1_0.svc?singleWsdl');
+        }
+        else {
+          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
+        }
+
+        $destinationAddress = AramexHelper::extractAddress($destination);
+
+        $originAddress = AramexHelper::extractAddress($origin);
+
+        $details = AramexHelper::extractCalculateRateShipmentDetails($shipmentDetails);
+
+        $aramex->initializeCalculateRate($originAddress, $destinationAddress, $details , $currency);
+
+        $call =  $soapClient->calculateRate($aramex->getParam());
+
+        $ret = new \stdClass;
+
+        if ($call->HasErrors) {
+            $ret->error = 1;
+            $ret->errors = $call->Notifications->Notification->Message;                
+        }
+        else{
+            $ret = $call;
+        }
+
+        return $ret;
+
+    }
 }

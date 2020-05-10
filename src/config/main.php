@@ -23,7 +23,19 @@ return [
 
 	/**  					Client Information
 	 *	Test Credentials
+	 * 	I recommend to take your own test account from aramex support or something, because those accounts 
+	 *  are not stable, Sometimes the request returns an error not defined in there documentation so it will
+	 *  take a lot of time tracing the error to find that the error is from the account itself.   
 	 */
+	// 'TEST' => [
+	// 	'AccountNumber'		 	=> '102331',
+	// 	'UserName'			 	=> 'testingapi@aramex.com',
+	// 	'Password'			 	=> 'R123456789$r',
+	// 	'AccountPin'		 	=> '321321',
+	// 	'AccountEntity'		 	=> 'LON',
+	// 	'AccountCountryCode'	=> 'GB',
+	// 	'Version'			 	=> 'v1'
+	// ],
 	'TEST' => [
 		'AccountNumber'		 	=> '20016',
 		'UserName'			 	=> 'testingapi@aramex.com',
@@ -32,7 +44,7 @@ return [
 		'AccountEntity'		 	=> 'AMM',
 		'AccountCountryCode'	=> 'JO',
 		'Version'			 	=> 'v1'
-	],
+	]
 
 	/**  					Client Information
 	 *	Live Credentials
@@ -82,7 +94,7 @@ return [
 	 *	For more information naviagte to Appendix-A (Page: 51) in 
 	 *  https://www.aramex.com/docs/default-source/resourses/resourcesdata/shipping-services-api-manual.pdf
 	 */ 
-	'ProductType' => 'EPX',
+	'ProductType' => 'PPX',
 
 
 	/**

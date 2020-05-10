@@ -62,4 +62,32 @@ trait Validator
 		}
 	}
 
+
+	public static function validateCalculateRateAddress($param)
+	{
+		$validator = StandardValidator::make($param , [
+			'city' => 'required|string',
+			'country_code' => 'required|min:2|max:2',
+		]);
+
+		if ($validator->fails()) 
+		{ 
+		  throw new \Exception("Validation Error <br> \n".json_encode($validator->messages(), JSON_PRETTY_PRINT), 1);
+		}
+	}
+
+	public static function validateCalculateRateDetails($param)
+	{
+		$validator =StandardValidator::make($param , [
+			'weight' => 'required',
+			'number_of_pieces' => 'required'
+		]);
+
+
+		if ($validator->fails()) 
+		{ 
+		  throw new \Exception("Validation Error <br> \n".json_encode($validator->messages(), JSON_PRETTY_PRINT), 1);
+		}
+	}
+
 }

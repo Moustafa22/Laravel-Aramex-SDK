@@ -202,4 +202,47 @@ class AramexHelper
         return $shipmentDetails;
     }
 
+
+    public static function extractAddress($param)
+    {
+        Validator::validateCalculateRateAddress($param);
+
+        $address = new \stdClass;
+        
+        $address->Line1 = $param['line_1'];
+        $address->Line2 = $param['line_2'] ?? '';
+        $address->Line3 = $param['line_3'] ?? '';
+        $address->City = $param['city'] ;
+        $address->StateOrProvinceCode = $param['state_code'] ?? '' ;
+        $address->PostCode = $param['postal_code'] ?? '';
+        $address->CountryCode = $param['country_code'];
+        $address->Longitude = $param['longitude'] ?? 0;
+        $address->Latitude = $param['latitude'] ?? 0;
+        $address->BuildingNumber = $param['building_number'] ?? null;
+        $address->BuildingName = $param['building_name'] ?? null;
+        $address->Floor = $param['floor'] ?? null;
+        $address->Apartment = $param['apartment'] ?? null;
+        $address->POBox = $param['po_box'] ?? null;
+        $address->Description = $param['description'] ?? null;
+
+        return $address;
+    }
+
+    public static function extractCalculateRateShipmentDetails($param)
+    {
+        Validator::validateCalculateRateDetails($param);
+
+        $details = new \stdClass;
+
+        $details->PaymentType = $param['payment_type'] ?? config('aramex.Payment');
+        $details->ProductGroup = $param['product_group'] ?? config('aramex.ProductGroup');
+        $details->ProductType = $param['product_type'] ?? config('aramex.ProductType');
+        $details->ActualWeight = new \stdClass;
+        $details->ActualWeight->Value = $param['weight'];
+        $details->ActualWeight->Unit = 'KG';
+        $details->NumberOfPieces = $param['number_of_pieces'];
+
+        return $details;
+    }
+
 }

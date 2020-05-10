@@ -66,14 +66,6 @@ class Core
         $this->psrd = config("aramex.".$this->env)['Password'];
         $this->ver = config("aramex.".$this->env)['Version'];
         $this->param['ClientInfo'] = config("aramex.".$this->env);
-
-        // $this->param['ClientInfo']['AccountCountryCode']= $this->accCntryCd;
-		// $this->param['ClientInfo']['AccountEntity'] = $this->accEnt;
-		// $this->param['ClientInfo']['AccountNumber'] = $this->accNum;
-		// $this->param['ClientInfo']['AccountPin'] = $this->accPin;
-		// $this->param['ClientInfo']['UserName'] = $this->usrNm;
-		// $this->param['ClientInfo']['Password'] = $this->psrd;
-		// $this->param['ClientInfo']['Version'] =$this->ver;
 		
     }
 
@@ -279,55 +271,19 @@ class Core
         $this->param['Comments'] = $comment;
     }
 
+    public function initializeCalculateRate($originAddress,$destinationAddress , $shipmentDetails, $currencyCode){
+
+        $this->param['OriginAddress'] = $originAddress;
+
+        $this->param['DestinationAddress'] = $destinationAddress;
+
+        $this->param['ShipmentDetails'] = $shipmentDetails;
+
+        $this->param["PreferredCurrencyCode"] = $currencyCode;
+    }
+
     public function getParam()
     {
         return $this->param;
-    }
-
-    public function initializeCalculateRate($param , $weight , $count){
-        $this->param['ClientInfo'] = [
-            "UserName" => "info@lemarais101.com",
-            "Password" => 'Mnb123@$',
-            "Version" => "v1",
-            "AccountNumber" => "165318",
-            "AccountPin" => "165265",
-            "AccountEntity" => "DXB",
-            "AccountCountryCode" => "AE",
-        ];
-
-        $this->param['OriginAddress'] = [
-                "Line1" => "Dubai Logistics City", // Warehouse
-                "Line2" => "Aramex Logistics Center", // Warehouse
-                "Line3" => "", // Warehouse
-                'City' => 'Dubai', // Warehouse
-                'CountryCode' => 'AE' // Warehouse
-        ];
-
-        $this->param['DestinationAddress'] = $param->DestinationAddress;
-
-
-        // $this->param['DestinationAddress'] = [
-        //         "Line1" => $param,
-        //         "Line2" => "Unit # 1",
-        //         "Line3" => "",    
-        //         'City' => 'Amman', // Destination
-        //         'CountryCode' => 'JO' // Destination
-        // ];
-
-        $this->param['ShipmentDetails'] = [
-                'PaymentType' => 'P',
-                'ProductGroup' => 'EXP',
-                // 'ProductGroup' => 'DOM',
-                'ProductType' => 'EPX',
-                // 'ProductType' => 'CDS',
-                'ActualWeight' => ['Value' => $weight, 'Unit' => 'KG'],
-                'NumberOfPieces' => $count
-        ];
-        if ($param->DestinationAddress['CountryCode'] == 'AE'){
-            $this->param['ShipmentDetails']['ProductGroup'] = 'DOM';
-            $this->param['ShipmentDetails']['ProductType'] = 'CDS';
-        }
-
-        $this->param["PreferredCurrencyCode"] = strtoupper(session('currency'));
     }
 }

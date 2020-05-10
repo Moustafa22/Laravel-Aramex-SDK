@@ -81,5 +81,38 @@ class TestController extends Controller
 
 
         print_r(json_encode($anotherData, JSON_PRETTY_PRINT));
+
+
+
+
+        // Calculate Rate
+        $originAddress = [
+            'line_1' => 'Test string',
+            'city' => 'Amman',
+            'country_code' => 'JO'
+        ];
+
+        $destinationAddress = [
+            'line_1' => 's',
+            'city' => 'Dubai',
+            'country_code' => 'AE'
+            
+        ];
+        $shipmentDetails = [
+            'weight' => 5, // KG
+            'number_of_pieces' => 2,
+            'payment_type' => 'P', // if u don't pass it, it will take the config default value 
+            'product_group' => 'EXP', // if u don't pass it, it will take the config default value
+            'product_type' => 'PPX', // if u don't pass it, it will take the config default value
+        ];
+
+        $shipmentDetails = [
+            'weight' => 5, // KG
+            'number_of_pieces' => 2,
+        ]
+        $currency = 'USD';
+        $data = Aramex::calculateRate($originAddress, $destinationAddress , $shipmentDetails , 'USD');
+
+        print(json_encode($data , JSON_PRETTY_PRINT));
     }
 }
