@@ -196,4 +196,50 @@ class Aramex
         return $ret;
 
     }
+
+
+    public static function trackShipments($param)
+    {
+        if (!is_array($param))
+        {
+            throw new \Exception("trackShipments Parameter Should Be an Array includes Strings", 1);
+        }
+
+        foreach ($param as $shipmentId) {
+            if (!is_string($shipmentId))
+            {
+                throw new \Exception("trackShipments Parameter Should Be an Array includes Strings", 1);
+            }
+        }
+
+        if (config('aramex.ENV') == 'TEST') 
+        {
+            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Tracking/Service_1_0.svc?singleWsdl');
+        }
+        else if (config('aramex.ENV') == 'LIVE')
+        {
+            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/Tracking/Service_1_0.svc?singleWsdl');
+        }
+        else {
+          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
+        }
+
+        $aramex = new Core;
+
+        $aramex->initializeShipmentTracking($param);
+
+        $call = $soapClient->TrackShipments($aramex->getParam());
+        
+        $ret = new \stdClass;
+
+        if ($call->HasErrors) {
+            $ret->error = 1;
+            $ret->errors = $call->Notifications->Notification->Message;                
+        }
+        else{
+            $ret = $call;
+        }
+
+        return $ret;
+    }
 }

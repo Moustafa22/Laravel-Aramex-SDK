@@ -282,6 +282,12 @@ class Core
         $this->param["PreferredCurrencyCode"] = $currencyCode;
     }
 
+
+    public function initializeShipmentTracking( $param)
+    {
+        $this->param['Shipments'] = $param; 
+    }
+
     public function getParam()
     {
         return $this->param;
