@@ -424,7 +424,7 @@ composer require octw/aramex
 ```
 
   Repsponse Sample <br />
-  Here i should mention if you pass wrong ID (Not Shipment ID) you will see the string you passed in `NonExistingWaybills` field. 
+  Here I should mention if you pass wrong ID (Not Shipment ID) you will see the string you passed in `NonExistingWaybills` field. 
 ``` json
   {
   "Transaction": {
