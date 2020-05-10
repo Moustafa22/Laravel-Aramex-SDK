@@ -46,11 +46,12 @@ composer require octw/aramex
     use Aramex;
   ```
   
-  However, The integration has 4 main functions:<br />
+  However, The integration has 5 main functions:<br />
       - Create Pickup.<br />
       - Cancel Pickup. <br />
       - Create Shipment.<br />
       - Calculate Rate. <br />
+      - Track Shipments. <br />
      
   
   
@@ -391,6 +392,116 @@ composer require octw/aramex
     }
 ```
   
+  
+  ### Track Shipments
+  This service show the detailed updates on the shipments you created.<br />
+  `Aramex::trackShipments($arrayOfShipmentIds);` <br /> 
+  Basically get the IDs of the created shipments (`$createShipmentResults->Shipments->ProcessedShipment->ID`) and stack the IDs in an array and pass the array to the function.<br />
+``` php
+        $shipments = [ 
+            $createShipmentResults->Shipments->ProcessedShipment->ID,
+            $anotherCreateShipmentResults->Shipments->ProcessedShipment->ID,
+        ];
+
+        $data = Aramex::trackShipments($shipments);
+```
+  
+  Sample Code<br />
+``` php
+        $shipments = [ 
+            $createShipmentResults->Shipments->ProcessedShipment->ID,
+            $anotherCreateShipmentResults->Shipments->ProcessedShipment->ID,
+        ];
+
+        $data = Aramex::trackShipments($shipments);
+        
+        if (!$data->error){
+          // Code Here
+        }
+        else {
+        // handle error
+        }
+```
+
+  Repsponse Sample <br />
+  Here i should mention if you pass wrong ID (Not Shipment ID) you will see the string you passed in `NonExistingWaybills` field. 
+``` json
+  {
+  "Transaction": {
+    "Reference1": "",
+    "Reference2": "",
+    "Reference3": "",
+    "Reference4": "",
+    "Reference5": null
+  },
+  "Notifications": {},
+  "HasErrors": false,
+  "TrackingResults": {
+    "KeyValueOfstringArrayOfTrackingResultmFAkxlpY": {
+      "Key": "IdOfTheShipemnt", 
+      "Value": {
+        "TrackingResult": [
+          {
+            "WaybillNumber": "41118182136",
+            "UpdateCode": "SH005",
+            "UpdateDescription": "Delivered",
+            "UpdateDateTime": "2015-07-13T13:08:00",
+            "UpdateLocation": "Al Muqabalain, Jordan",
+            "Comments": "AMJAD Delivered by (Ayman Abushhail)",
+            "ProblemCode": "",
+            "GrossWeight": "0.1",
+            "ChargeableWeight": "0.1",
+            "WeightUnit": "KG"
+          },
+          {
+            "WaybillNumber": "41118182136",
+            "UpdateCode": "SH003",
+            "UpdateDescription": "Out for Delivery",
+            "UpdateDateTime": "2015-07-13T08:46:00",
+            "UpdateLocation": "Al Muqabalain, Jordan",
+            "Comments": "",
+            "ProblemCode": "",
+            "GrossWeight": "0.1",
+            "ChargeableWeight": "0.1",
+            "WeightUnit": "KG"
+          },
+          {
+            "WaybillNumber": "41118182136",
+            "UpdateCode": "SH160",
+            "UpdateDescription": "Under processing at operations facility",
+            "UpdateDateTime": "2015-07-13T04:30:00",
+            "UpdateLocation": "Al Muqabalain, Jordan",
+            "Comments": "",
+            "ProblemCode": "V01",
+            "GrossWeight": "0.1",
+            "ChargeableWeight": "0.1",
+            "WeightUnit": "KG"
+          },
+      
+          {
+            "WaybillNumber": "30994423681",
+            "UpdateCode": "SH014",
+            "UpdateDescription": "Record created.",
+            "UpdateDateTime": "2018-10-11T16:05:00",
+            "UpdateLocation": "Amman, Jordan",
+            "Comments": "0.5,0.5,KG ",
+            "ProblemCode": "",
+            "GrossWeight": "0.5",
+            "ChargeableWeight": "0.5"
+          }
+        ]
+      }
+    }
+  },
+  "NonExistingWaybills":{
+    "string":[
+      "WrongIdIHavePassed",
+      "TestId" 
+    ]
+  }
+}
+```
+
 
 MIT Licence 
 
