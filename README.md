@@ -66,7 +66,7 @@ composer require octw/aramex
     "email" => 'email@domain.com'
     "country_code" => 'US' // ISO 3166-1 Alpha-2 Code
     "city" => 'New York' // City Name
-    "zip_code" => 321654 // Postal Code
+    "zip_code" => 10001 // Postal Code
     "line1" => 'Line 1 Details'
     "line2" => 'Line 2 Details'
     "line3" => 'Line 3 Details'
@@ -105,7 +105,7 @@ composer require octw/aramex
     		'email' => 'myEmail@gmail.com',
     		'city' => 'New York',
     		'country_code' => 'US',
-            'zip_code'=> 99501,
+            'zip_code'=> 10001,
     		'line1' => 'The line1 Details',
             'line2' => 'The line2 Details',
     		'line3' => 'The line2 Details',
@@ -136,7 +136,7 @@ composer require octw/aramex
                 'cell_phone' => '+321654987789',
                 'country_code' => 'US',
                 'city' => 'New York',
-                'zip_code' => 32160,
+                'zip_code' => 10001,
                 'line1' => 'Line1 Details',
                 'line2' => 'Line2 Details',
                 'line3' => 'Line3 Details',
@@ -148,7 +148,7 @@ composer require octw/aramex
                 'cell_phone' => '+321654987789',
                 'country_code' => 'US',
                 'city' => 'New York',
-                'zip_code' => 32160,
+                'zip_code' => 10001,
                 'line1' => 'Line1 Details',
                 'line2' => 'Line2 Details',
                 'line3' => 'Line3 Details',
