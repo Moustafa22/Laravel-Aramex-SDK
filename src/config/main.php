@@ -44,7 +44,7 @@ return [
 		'AccountEntity'		 	=> 'AMM',
 		'AccountCountryCode'	=> 'JO',
 		'Version'			 	=> 'v1'
-	]
+	],
 
 	/**  					Client Information
 	 *	Live Credentials
