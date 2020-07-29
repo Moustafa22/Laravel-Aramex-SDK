@@ -46,12 +46,15 @@ composer require octw/aramex
     use Aramex;
   ```
   
-  However, The integration has 5 main functions:<br />
+  However, The integration has 7 main functions:<br />
       - Create Pickup.<br />
       - Cancel Pickup. <br />
       - Create Shipment.<br />
       - Calculate Rate. <br />
       - Track Shipments. <br />
+      - Fetch Countries. <br />
+      - Fetch Cities. <br />
+      - Validate Address. <br />
      
   
   
@@ -501,6 +504,146 @@ composer require octw/aramex
   }
 }
 ```
+### Fetch Countries
+
+  Fetching Aramex's Countries that is supported by Aramex and stored in their database. <br />
+  You can either get all countries or get specific country information by passing country code as an optional parameter. <br />
+  Please note that i recommend to call this method and insert all the response to your database so you can get the countries from your database and it is based on their countries so you don't waste time and make it unefficient by calling this API whenever you want to process countries data.<br />
+
+``` php
+
+        $data = Aramex::fetchCountries($countryCode); 
+        // Or 
+        $data = Aramex::fetchCountries();
+```
+  Response Sample <br />
+``` 
+  {
+   "Transaction":{
+      "Reference1":"",
+      "Reference2":"",
+      "Reference3":"",
+      "Reference4":"",
+      "Reference5":null
+   },
+   "Notifications":{
+
+   },
+   "HasErrors":false,
+   "Countries":{
+      "Country":[
+         {
+            "Code":"AD",
+            "Name":"Andorra",
+            "IsoCode":"AND",
+            "StateRequired":true,
+            "PostCodeRequired":false,
+            "PostCodeRegex":{
+
+            },
+            "InternationalCallingNumber":"376"
+         },
+         {
+            "Code":"AE",
+            "Name":"United Arab Emirates",
+            "IsoCode":"ARE",
+            "StateRequired":true,
+            "PostCodeRequired":false,
+            "PostCodeRegex":{
+
+            },
+            "InternationalCallingNumber":"971"
+         },
+         ...
+      ]
+   }
+}
+
+``` 
+
+
+### Fetch Cities
+  Fetching Aramex's Cities by country code.<br />
+``` php
+
+        $data = Aramex::fetchCities('AE'); 
+
+```
+
+  Response Sample <br />
+
+```
+{
+   "Transaction":{
+      "Reference1":"",
+      "Reference2":"",
+      "Reference3":"",
+      "Reference4":"",
+      "Reference5":null
+   },
+   "Notifications":{
+
+   },
+   "HasErrors":false,
+   "Cities":{
+      "string":[
+         "Abadilah",
+         "Abu Dhabi",
+         "Abu Hayl",
+         "Abu Shagara",
+         "Adhan",
+         "Ajman City",
+         "Akamiyah",
+         "Al Ain City",
+         "Al Ardiyah",
+         "Al Azrah",
+         "Al Dharbaniyah",
+         ...
+      ]
+   }
+}
+```
+
+### Validate Address
+  
+  To validate addresses and skipping struggling with users' inputs thats not compatible with Aramex's end, You can validate addresses before creating pickups or shipments.
+```php
+  
+  $data = Aramex::validateAddress([
+    'line_1':'Test', // optional (Passing it is recommended)
+    'line_2':'Test', // optional
+    'line_3':'Test', // optional
+    'country_code':'JO',
+    'postal_code':'', // optional
+    'city':'Amman',
+  ]);
+
+```
+
+  Response Sample <br />
+
+```json
+{
+   "Transaction":{
+      "Reference1":"",
+      "Reference2":"",
+      "Reference3":"",
+      "Reference4":"",
+      "Reference5":null
+   },
+   "Notifications":{
+
+   },
+   "HasErrors":false,
+   "SuggestedAddresses":{
+
+   }
+}
+```
+
+
+
+
 
 
 MIT Licence 

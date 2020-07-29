@@ -3,26 +3,31 @@
 namespace Octw\Aramex\Helpers;
 
 use Octw\Aramex\Validators\Validator;
+use SoapClient;
+
 /**
 * Basic Helper to extract data from param array and some validations.
 */
 class AramexHelper
 {
+    const SHIPPING = 1;
+    const TRACKING = 2;
+    const RATE = 3;
+    const LOCATION = 4;
 
-
-	/**
-	* @function just Data extraction nothing functional.
+    /**
+    * @function just Data extraction nothing functional.
     * @param Array of options.
     * @return Object of all required details about the consignee.
-	*/
-	public static function extractConsigneeObject($param = []){
+    */
+    public static function extractConsigneeObject($param = []){
 
-		// 		Validation
+        //      Validation
 
-       	// Validate First
+        // Validate First
         Validator::validateAddressObject($param);
 
-        //		Extract Data into a new object
+        //      Extract Data into a new object
         
         // Create the Objcect
         $consignee =  new \stdClass;
@@ -49,13 +54,13 @@ class AramexHelper
     public static function extractPickupAddressContact($param =[])
     {
 
-		// 		Validation
+        //      Validation
 
-       	// Validate First
+        // Validate First
 
-    	Validator::validateAddressObject($param);
+        Validator::validateAddressObject($param);
 
-		// Create the Objcect
+        // Create the Objcect
         $pickupAddress = new \stdClass;
 
         // Start extracting
@@ -78,35 +83,35 @@ class AramexHelper
 
     public static function extractPickupDetails($param)
     {
-    	// 		Validation
-    	// Validate First
-    	Validator::validatePickupDetails($param);
+        //      Validation
+        // Validate First
+        Validator::validatePickupDetails($param);
 
-    	// Create the Object 
+        // Create the Object 
 
-    	$pickupDetails = new \stdClass;
+        $pickupDetails = new \stdClass;
 
-    	// Start extracting
-		$pickupDetails->Reference1 = isset($param['reference1']) ? $param['reference1']: time() ; 
+        // Start extracting
+        $pickupDetails->Reference1 = isset($param['reference1']) ? $param['reference1']: time() ; 
         $pickupDetails->Reference2 = isset($param['reference2']) ? $param['reference2']:'' ;
-		$pickupDetails->Reference3 = isset($param['reference3']) ? $param['reference3']:'' ;
-		
-		$pickupDetails->PickupLocation = $param['pickup_location'];
-		$pickupDetails->Status = $param['status'];
+        $pickupDetails->Reference3 = isset($param['reference3']) ? $param['reference3']:'' ;
+        
+        $pickupDetails->PickupLocation = $param['pickup_location'];
+        $pickupDetails->Status = $param['status'];
 
-		$pickupDetails->PickupDate = $param['pickup_date'];
-		$pickupDetails->ReadyTime = $param['ready_time'];
-		$pickupDetails->LastPickupTime = $param['last_pickup_time'];
-		$pickupDetails->ClosingTime = $param['closing_time'];
-		
-		$pickupDetails->ProductGroup = isset($param['product_group']) ?$param['product_group'] : config('aramex.ProductGroup') ; 
-		$pickupDetails->Payment = isset($param['payment']) ?$param['payment'] : config('aramex.Payment') ; 
-		$pickupDetails->ProductType = isset($param['product_type']) ?$param['product_type'] : config('aramex.ProductType')  ; 
+        $pickupDetails->PickupDate = $param['pickup_date'];
+        $pickupDetails->ReadyTime = $param['ready_time'];
+        $pickupDetails->LastPickupTime = $param['last_pickup_time'];
+        $pickupDetails->ClosingTime = $param['closing_time'];
+        
+        $pickupDetails->ProductGroup = isset($param['product_group']) ?$param['product_group'] : config('aramex.ProductGroup') ; 
+        $pickupDetails->Payment = isset($param['payment']) ?$param['payment'] : config('aramex.Payment') ; 
+        $pickupDetails->ProductType = isset($param['product_type']) ?$param['product_type'] : config('aramex.ProductType')  ; 
 
-		$pickupDetails->Weight = $param['weight'];
-		$pickupDetails->Volume = $param['volume'];
+        $pickupDetails->Weight = $param['weight'];
+        $pickupDetails->Volume = $param['volume'];
 
-		return $pickupDetails;
+        return $pickupDetails;
     }
 
     public static function extractShipperAddressContact($param = [] )
@@ -243,6 +248,50 @@ class AramexHelper
         $details->NumberOfPieces = $param['number_of_pieces'];
 
         return $details;
+    }
+
+    public static function getSoapClient($type)
+    {
+        $test = false;
+
+        if(config('aramex.ENV') == 'TEST')
+        {
+            $test = true;
+        }
+        else if (config('aramex.ENV') != 'LIVE'){
+          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
+        }
+
+        switch ($type) {
+            case self::SHIPPING:
+                if ($test)
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/shipping.xml');
+                else 
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/shipping.xml');
+                break;
+
+            case self::TRACKING:
+                if ($test)
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/tracking.xml');
+                else 
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/tracking.xml');
+                break;
+
+            case self::RATE:
+                if ($test)
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/rate.xml');
+                else 
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/rate.xml');
+                break;
+
+            case self::LOCATION:
+                if ($test)
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/location.xml');
+                else 
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/location.xml');
+                break;
+            
+        }
     }
 
 }

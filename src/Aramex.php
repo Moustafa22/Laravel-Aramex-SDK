@@ -12,30 +12,22 @@ use SoapClient;
 class Aramex
 {
 
-	/**
-	*
-	*  @param array of pickup parameters
-	*  @return object described in https://
-	*/
-	public static function createPickup($param = [])
-	{
-		// Define an instance from the core class.
-		$aramex = new Core;
-		// Import SoapCLient object from Aramex's endpoint.
-        if (config('aramex.ENV') == 'TEST') 
-        {
-            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
-        }
-        else if (config('aramex.ENV') == 'LIVE')
-        {
-            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
-        }
-        else {
-          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
-        }
+    /**
+    *
+    *  @param array of pickup parameters
+    *  @return object described in https://
+    */
+    public static function createPickup($param = [])
+    {
+        // Define an instance from the core class.
+        $aramex = new Core;
+        // Import SoapCLient object from Aramex's endpoint.
+        
+        $soapClient = AramexHelper::getSoapClient(AramexHelper::SHIPPING);
 
-		// Preparation for initializing pickup request (Extract the data). 
-		$pickupAddress = AramexHelper::extractPickupAddressContact($param);     // unchangeable
+
+        // Preparation for initializing pickup request (Extract the data). 
+        $pickupAddress = AramexHelper::extractPickupAddressContact($param);     // unchangeable
         $pickupDetails = AramexHelper::extractPickupDetails($param);            // changeable
 
         // initialize pickup request.
@@ -59,8 +51,8 @@ class Aramex
             }
         }
         else {
-        	
-        	// extract helpful data from call response.
+            
+            // extract helpful data from call response.
             $pickupGUID = $call->ProcessedPickup->GUID;
             $pickupId = $call->ProcessedPickup->ID;
             //Extra Stuffs TODO.
@@ -74,24 +66,16 @@ class Aramex
         }
         // return the prepared object.
         return $ret;    
-	}
+    }
 
     public static function cancelPickup($pickupGuid , $commnet)
     {
         // Define an instance from the core class.
         $aramex = new Core;
+        
         // Import SoapCLient object from Aramex's endpoint. 
-        if (config('aramex.ENV') == 'TEST') 
-        {
-            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
-        }
-        else if (config('aramex.ENV') == 'LIVE')
-        {
-            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
-        }
-        else {
-          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
-        }
+        $soapClient = AramexHelper::getSoapClient(AramexHelper::SHIPPING);
+
 
         $aramex->initializePickupCancelation($pickupGuid , $commnet);
 
@@ -120,17 +104,8 @@ class Aramex
         // Define an instance from the core class.
         $aramex = new Core;
         // Import SoapCLient object from Aramex's endpoint. 
-        if (config('aramex.ENV') == 'TEST') 
-        {
-            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
-        }
-        else if (config('aramex.ENV') == 'LIVE')
-        {
-            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl');
-        }
-        else {
-          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
-        }
+
+        $soapClient = AramexHelper::getSoapClient(AramexHelper::SHIPPING);
 
         $shipperAddress = AramexHelper::extractShipperAddressContact($param);
         $consigneeAddress = AramexHelper::extractConsigneeAddressContact($param);
@@ -161,17 +136,8 @@ class Aramex
 
         $aramex = new Core;
 
-        if (config('aramex.ENV') == 'TEST') 
-        {
-            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/RateCalculator/Service_1_0.svc?singleWsdl');
-        }
-        else if (config('aramex.ENV') == 'LIVE')
-        {
-            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/RateCalculator/Service_1_0.svc?singleWsdl');
-        }
-        else {
-          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
-        }
+        $soapClient = AramexHelper::getSoapClient(AramexHelper::RATE);
+
 
         $destinationAddress = AramexHelper::extractAddress($destination);
 
@@ -212,17 +178,8 @@ class Aramex
             }
         }
 
-        if (config('aramex.ENV') == 'TEST') 
-        {
-            $soapClient = new SoapClient('https://ws.dev.aramex.net/ShippingAPI.V2/Tracking/Service_1_0.svc?singleWsdl');
-        }
-        else if (config('aramex.ENV') == 'LIVE')
-        {
-            $soapClient = new SoapClient('https://ws.aramex.net/ShippingAPI.V2/Tracking/Service_1_0.svc?singleWsdl');
-        }
-        else {
-          throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
-        }
+        $soapClient = AramexHelper::getSoapClient(AramexHelper::TRACKING);
+
 
         $aramex = new Core;
 
@@ -242,4 +199,80 @@ class Aramex
 
         return $ret;
     }
-}
+
+
+    public static function fetchCountries($code = null)
+    {
+
+        $soapClient = AramexHelper::getSoapClient(AramexHelper::LOCATION);
+        
+        $aramex = new Core;
+
+        $aramex->initializeFetchCountries($code);
+
+        if (isset($code))
+            $call = $soapClient->FetchCountry($aramex->getParam());
+        else 
+            $call = $soapClient->FetchCountries($aramex->getParam());
+
+        $ret = new \stdClass;
+
+        if ($call->HasErrors) {
+            $ret->error = 1;
+            $ret->errors = $call->Notification;                
+        }
+        else{
+            $ret = $call;
+        }
+
+        return $ret;
+    }
+
+    public static function fetchCities($code, $nameStartWith = null)
+    {
+        $soapClient = AramexHelper::getSoapClient(AramexHelper::LOCATION);
+
+        $aramex = new Core;
+
+        $aramex->initializeFetchCities($code, $nameStartWith);
+
+        $call = $soapClient->FetchCities($aramex->getParam());
+        
+        $ret = new \stdClass;
+
+        if ($call->HasErrors) {
+            $ret->error = 1;
+            $ret->errors = $call->Notifications;
+        }
+        else{
+            $ret = $call;
+        }
+
+        return $ret;
+    } 
+
+    public static function validateAddress($address)
+    {
+        $address = AramexHelper::extractAddress($address);
+
+
+        $soapClient = AramexHelper::getSoapClient(AramexHelper::LOCATION);
+
+        $aramex = new Core;
+
+        $aramex->initializeValidateAddress($address);
+
+        $call = $soapClient->ValidateAddress($aramex->getParam());
+        $ret = new \stdClass;
+
+        if ($call->HasErrors) {
+            $ret->error = 1;
+            $ret->errors = $call->Notifications;
+        }
+        else{
+            $ret = $call;
+        }
+
+        return $ret;
+    } 
+}   

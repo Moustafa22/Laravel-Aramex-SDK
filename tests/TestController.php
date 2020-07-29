@@ -52,7 +52,7 @@ class TestController extends Controller
                 'cell_phone' => '+321654987789',
                 'country_code' => 'US',
                 'city' => 'New York',
-                'zip_code' => 32160,
+                'zip_code' => 10001,
                 'line1' => 'Line1 Details',
                 'line2' => 'Line2 Details',
                 'line3' => 'Line3 Details',
