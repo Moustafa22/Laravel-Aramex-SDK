@@ -641,8 +641,9 @@ composer require octw/aramex
 }
 ```
 
+Hope this helps you well, Buy me a coffee ;) <br />
 
-
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/MoustafaAllahham)
 
 
 
