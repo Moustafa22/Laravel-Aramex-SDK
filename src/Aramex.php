@@ -153,7 +153,7 @@ class Aramex
 
         if ($call->HasErrors) {
             $ret->error = 1;
-            $ret->errors = $call->Notifications->Notification->Message;                
+            $ret->errors = $call->Notifications;
         }
         else{
             $ret = $call;
@@ -191,7 +191,7 @@ class Aramex
 
         if ($call->HasErrors) {
             $ret->error = 1;
-            $ret->errors = $call->Notification;                
+            $ret->errors = $call->Notifications;
         }
         else{
             $ret = $call;
