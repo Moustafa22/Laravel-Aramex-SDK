@@ -214,9 +214,9 @@ class AramexHelper
 
         $address = new \stdClass;
         
-        $address->Line1 = $param['line_1'];
-        $address->Line2 = $param['line_2'] ?? '';
-        $address->Line3 = $param['line_3'] ?? '';
+        $address->Line1 = $param['line1'];
+        $address->Line2 = $param['line2'] ?? '';
+        $address->Line3 = $param['line3'] ?? '';
         $address->City = $param['city'] ;
         $address->StateOrProvinceCode = $param['state_code'] ?? '' ;
         $address->PostCode = $param['postal_code'] ?? '';
