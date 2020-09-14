@@ -247,6 +247,15 @@ class AramexHelper
         $details->ActualWeight->Unit = 'KG';
         $details->NumberOfPieces = $param['number_of_pieces'];
 
+        if (!empty($param['length']) && !empty($param['width']) && !empty($param['height']) )
+        {
+            $details->Dimensions =  new \stdClass;
+            $details->Dimensions->Length = floatval($param['length']);
+            $details->Dimensions->Width  = floatval($param['width']);
+            $details->Dimensions->Height = floatval($param['height']);
+            $details->Dimensions->Unit = 'CM';
+        }
+
         return $details;
     }
 

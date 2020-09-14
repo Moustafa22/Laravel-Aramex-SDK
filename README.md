@@ -304,16 +304,19 @@ composer require octw/aramex
   
 ``` php
     [
-        'payment_type':'', // default value in config file
-        'product_group':'', // default value in config file
-        'product_type':'', // default value in config file 
-        'weight':'Double', // IN KG (Kilograms)
-        'number_of_pieces':'Integer|Required'
+        'payment_type' => '', // default value in config file
+        'product_group' => '', // default value in config file
+        'product_type' => '', // default value in config file 
+        'weight' => 5.2, // IN KG (Kilograms)
+        'number_of_pieces' => 'Integer|Required',
+        'height' => 5, // Dimensions in CM (optional)
+        'width' => 3,  // Dimensions in CM (optional)
+        'length' => 2  // Dimensions in CM (optional)
     ]
 ```
   
   The `$currency` is a string (3 Chars) for prefered currency calculations like `USD`,`AED`,`EUR`,`KWD` and so on. <br />
-  
+  Note that in case you want pass the dimensions, it will not take the parameters unless you pass all the `height`, `width`, `length`. <br />
   
   Sample Code 
   
@@ -328,20 +331,24 @@ composer require octw/aramex
             'line_1' => 'Test String',
             'city' => 'Dubai',
             'country_code' => 'AE'
-            
         ];
+
         $shipmentDetails = [
             'weight' => 5, // KG
             'number_of_pieces' => 2,
             'payment_type' => 'P', // if u don't pass it, it will take the config default value 
             'product_group' => 'EXP', // if u don't pass it, it will take the config default value
             'product_type' => 'PPX', // if u don't pass it, it will take the config default value
+            'height' => 5.5, // CM
+            'width' => 3,  // CM
+            'length' => 2.3  // CM
         ];
 
         $shipmentDetails = [
             'weight' => 5, // KG
-            'number_of_pieces' => 2,
-        ]
+            'number_of_pieces' => 2, 
+        ];
+
         $currency = 'USD';
         $data = Aramex::calculateRate($originAddress, $destinationAddress , $shipmentDetails , 'USD');
         
