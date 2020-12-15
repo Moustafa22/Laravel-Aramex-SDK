@@ -237,10 +237,27 @@ composer require octw/aramex
    }
 ```
 
+  Error Response <br />
+
+```json  
+  {
+    "error": true,
+    "errors": [
+      {
+        "Code": "Aramex Error Code",
+        "Message": "Aramex Error Message"
+      },
+      {
+        "Code": "Aramex Error Code",
+        "Message": "Aramex Error Message"
+      }
+    ]
+  }
+```
   Sample Code    
     
 ```php  
-        $anotherData = Aramex::createShipment([
+        $callResponse = Aramex::createShipment([
             'shipper' => [
                 'name' => 'Steve',
                 'email' => 'email@users.companies',
@@ -274,6 +291,17 @@ composer require octw/aramex
             'number_of_pieces' => 1,
             'description' => 'Goods Description, like Boxes of flowers',
         ]);
+        if (!empty($callResponse->error))
+        {
+            foreach ($callResponse->errors as $errorObject) {
+              handleError($errorObject->Code, $errorObject->Message);
+            }
+        }
+        else {
+          // extract your data here, for example
+          // $shipmentId = $response->Shipments->ProcessedShipment->ID;
+          // $labelUrl = $response->Shipments->ProcessedShipment->ShipmentLabel->LabelURL;
+        }
 ```
 
 ### Calculate Rate

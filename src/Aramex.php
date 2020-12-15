@@ -120,7 +120,13 @@ class Aramex
 
         if ($call->HasErrors) {
             $ret->error = 1;
-            $ret->errors = $call->Shipments->ProcessedShipment->Notifications->Notification;
+            if (is_object($call->Shipments->ProcessedShipment->Notifications->Notification))
+            {
+                $ret->errors = [ $call->Shipments->ProcessedShipment->Notifications->Notification ];
+            }
+            else {
+                $ret->errors = $call->Shipments->ProcessedShipment->Notifications->Notification;
+            }
         }
         else{
             $ret = $call;
