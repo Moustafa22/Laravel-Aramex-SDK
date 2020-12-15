@@ -270,34 +270,35 @@ class AramexHelper
         else if (config('aramex.ENV') != 'LIVE'){
           throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
         }
+        libxml_disable_entity_loader(false);
 
         switch ($type) {
             case self::SHIPPING:
                 if ($test)
-                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/shipping.xml');
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/shipping.xml', ['trace' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
                 else 
-                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/shipping.xml');
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/shipping.xml', ['trace' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
                 break;
 
             case self::TRACKING:
                 if ($test)
-                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/tracking.xml');
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/tracking.xml', ['trace' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
                 else 
-                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/tracking.xml');
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/tracking.xml', ['trace' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
                 break;
 
             case self::RATE:
                 if ($test)
-                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/rate.xml');
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/rate.xml', ['trace' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
                 else 
-                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/rate.xml');
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/rate.xml', ['trace' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
                 break;
 
             case self::LOCATION:
                 if ($test)
-                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/location.xml');
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/location.xml', ['trace' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
                 else 
-                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/location.xml');
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/location.xml', ['trace' => true, 'cache_wsdl' => WSDL_CACHE_MEMORY]);
                 break;
             
         }
