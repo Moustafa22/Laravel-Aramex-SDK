@@ -276,7 +276,7 @@ class AramexHelper
                 if ($test)
                     return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/shipping.xml');
                 else 
-                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/test/shipping.xml');
+                    return new SoapClient(dirname(__FILE__) . '/../../wsdls/live/shipping.xml');
                 break;
 
             case self::TRACKING:
