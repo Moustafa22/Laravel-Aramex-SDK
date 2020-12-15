@@ -123,7 +123,7 @@ class Core
                 "ForeignHAWB"=> null,
                 "TransportType"=> "0",
                 "PickupGUID"=> $details->PickupGUID,
-                "Number"=> 0,
+                "Number"=> null,
                 'Details' => [                      
                     'ActualWeight' => [
                         'Value'                 => $details->ActualWeight,
