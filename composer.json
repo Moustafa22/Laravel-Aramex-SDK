@@ -2,7 +2,7 @@
     "name": "octw/aramex",
     "description": "A Library to integrate with Aramex APIs",
     "type": "package",
-    "keywords": ["aramex", "sdk", "php", "laravel", "shipping", "integraiton", "ship"],
+    "keywords": ["aramex", "sdk", "php", "laravel", "shipping", "integraton", "ship"],
     "license": "MIT",
     "authors": [
         {
