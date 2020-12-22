@@ -187,7 +187,7 @@ class AramexHelper
         $shipmentDetails->PaymentType  = $param['payment_type'] ?? config('aramex.Payment');
         $shipmentDetails->PaymentType = $param['payment_type'] ?? config('aramex.Payment');
         $shipmentDetails->PaymentOptions = $param['payment_type'] ?? config('aramex.PaymentOptions');
-
+        $shipmentDetails->Services = $param['services'] ?? config('aramex.Services');
 
         $shipmentDetails->DescriptionOfGoods = $param['description'] ?? "";
 

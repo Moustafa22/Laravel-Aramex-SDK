@@ -137,6 +137,7 @@ class Core
                     'NumberOfPieces'        => $details->NumberOfPieces,
                     'DescriptionOfGoods'    => $details->DescriptionOfGoods,
                     'GoodsOriginCountry'    => $details->GoodsOriginCountry,
+                    'Services'              => $details->Services,
                     
                     // Optionals Depending on Payment terms above
                     
