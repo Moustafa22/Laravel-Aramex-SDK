@@ -155,7 +155,7 @@ return [
 	/**
 	 *	 Label Information 
 	 *	 Available Values:
-	 *      ReportID   => 9201 only (No one knows why do we send it if its only can be set to 9201 !!)
+	 *      ReportID   => 9201, 9729 (9729 use it when COD to extract readable reports, 9201 with COD will not be accepted) 
 	 *		ReportType => “URL” to get report hosted on URL as PDF
 	 *					  “RPT” to get a streamed file
 	 */

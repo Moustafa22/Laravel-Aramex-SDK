@@ -53,7 +53,6 @@ trait Validator
 			'shipping_date_time' => 'required',
 			'due_date' => 'required',
 			'pickup_location' => 'required',
-			'pickup_guid' => 'required',
 			'weight' => 'required',
 		]);
 		if ($validator->fails()) 

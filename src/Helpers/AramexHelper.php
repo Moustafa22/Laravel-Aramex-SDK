@@ -184,10 +184,13 @@ class AramexHelper
         
         $shipmentDetails->ProductGroup = $param['product_group'] ?? config('aramex.ProductGroup');
         $shipmentDetails->ProductType  = $param['product_type'] ?? config('aramex.ProductType');
-        $shipmentDetails->PaymentType  = $param['payment_type'] ?? config('aramex.Payment');
         $shipmentDetails->PaymentType = $param['payment_type'] ?? config('aramex.Payment');
-        $shipmentDetails->PaymentOptions = $param['payment_options'] ?? config('aramex.PaymentOptions');
+        $shipmentDetails->PaymentOptions = $param['payment_option'] ?? config('aramex.PaymentOptions');
         $shipmentDetails->Services = $param['services'] ?? config('aramex.Services');
+        $shipmentDetails->Reference1 = $param['reference'] ?? '';
+        $shipmentDetails->ShipperReference = $param['shipper_reference'] ?? '';
+        $shipmentDetails->ConsgineeReference = $param['consignee_reference'] ?? '';
+
 
         $shipmentDetails->DescriptionOfGoods = $param['description'] ?? "";
 

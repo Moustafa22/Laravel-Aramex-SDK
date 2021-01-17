@@ -160,10 +160,25 @@ composer require octw/aramex
             'due_date' => time() + 60000,  // due date of the shipment
             'comments' => 'No Comment', // ,comments
             'pickup_location' => 'at reception', // location as pickup
-            'pickup_guid' => $guid, // GUID taken from createPickup method
+            'pickup_guid' => $guid, // GUID taken from createPickup method (optional)
             'weight' => 1, // weight
-            'number_of_pieces' => 1,  // number of boxes
+            'goods_country' => null, // optional
+            'number_of_pieces' => 1,  // number of items
             'description' => 'Goods Description, like Boxes of flowers', // description
+            'reference' => '01020102' // reference to print on shipment report (policy)
+            'shipper_reference' => '19191', // optional
+            'consignee_reference' => '010101', // optional 
+            'services' => 'CODS,FIRST,FRDM, .. ' // ',' seperated string, refer to services in the official documentation
+            'cash_on_delivery_amount' => 10.32 // in case of CODS (in USD only "as they want")
+            'insurance_amount' => 0, // optional
+            'collect_amount' => 0, // optional
+            'customs_value_amount' => 0, //optional (required for express shipping)
+            'cash_additional_amount' => 0, // optional 
+            'cash_additional_amount_description' => 'Something here',
+            'product_group' => 'DOM', // or EXP (defined in config file, if you dont pass it will take the config value)
+            'product_type' => 'PPX', // refer to the official documentation (defined in config file, if you dont pass it will take the config value)
+            'payment_type' => 'P', // P,C, 3 refer to the official documentation (defined in config file, if you dont pass it will take the config value)
+            'payment_option' => null, // refer to the official documentation (defined in config file, if you dont pass it will take the config value)
 ```
 
    retrun stdClass:
@@ -286,7 +301,7 @@ composer require octw/aramex
             'due_date' => time() + 60000,
             'comments' => 'No Comment',
             'pickup_location' => 'at reception',
-            'pickup_guid' => $guid,
+            // 'pickup_guid' => $guid,
             'weight' => 1,
             'number_of_pieces' => 1,
             'description' => 'Goods Description, like Boxes of flowers',

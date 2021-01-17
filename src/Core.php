@@ -72,8 +72,9 @@ class Core
     public function initializeShipment($shipper , $consignee , $details)
     {
         $this->param['Shipments'] = [
-            'Shipment' => [
+            [
                 'Shipper'   => [
+                    'Reference1'        => $details->ShipperReference, // for response              
                     'AccountNumber' => $this->accNum,
                     'Contact'       => [
                         'PersonName'            => $shipper->PersonName,
@@ -95,8 +96,7 @@ class Core
                     ],
                 ],
                 'Consignee' => [
-                    'Reference1'    => time(), // for response
-                    'Reference2'    => '', // for response
+                    'Reference1'        => $details->ConsgineeReference, // for response              
                     'AccountNumber' => $this->accNum, //Account Number 
                     'Contact'       => [
                         'PersonName'            => $consignee->PersonName,//Person Name 
@@ -114,17 +114,17 @@ class Core
                     ],
                             
                 ],
-                
-                'ShippingDateTime' => $details->ShippingDateTime, // Should be Filled
-                "DueDate"=> $details->DueDate, // Should be Filled
-                "Comments"=> $details->Comments, //Should Be Filled
-                "PickupLocation"=> $details->PickupLocation, // Should be Filled
-                "Attachments"=> null,
-                "ForeignHAWB"=> null,
-                "TransportType"=> "0",
-                "PickupGUID"=> $details->PickupGUID,
-                "Number"=> null,
-                'Details' => [                      
+                'ShippingDateTime'  => $details->ShippingDateTime, // Should be Filled
+                "DueDate"           => $details->DueDate, // Should be Filled
+                "Comments"          => $details->Comments, //Should Be Filled
+                "PickupLocation"    => $details->PickupLocation, // Should be Filled
+                "Attachments"       => null,
+                "ForeignHAWB"       => null,
+                'Reference1'        => $details->Reference1, // for response              
+                "TransportType"     => 0,
+                "PickupGUID"        => $details->PickupGUID,
+                "Number"            => null,
+                'Details' => [        
                     'ActualWeight' => [
                         'Value'                 => $details->ActualWeight,
                         'Unit'                  => 'Kg'
@@ -138,6 +138,7 @@ class Core
                     'DescriptionOfGoods'    => $details->DescriptionOfGoods,
                     'GoodsOriginCountry'    => $details->GoodsOriginCountry,
                     'Services'              => $details->Services,
+                    'Items'                 => $details->NumberOfPieces, 
                     
                     // Optionals Depending on Payment terms above
                     
@@ -148,7 +149,8 @@ class Core
 
                     'CashOnDeliveryAmount'  => [
                         'Value'         => $details->CashOnDeliveryAmount,
-                        'CurrencyCode'  => $details->CurrencyCode
+                        'CurrencyCode'  => 'USD'
+                        // 'CurrencyCode'  => $details->CurrencyCode
                     ],
                     
                     'InsuranceAmount'       => [
@@ -168,7 +170,7 @@ class Core
                     ],
 
                 ]
-            ]
+             ]
         ];
 
     }
