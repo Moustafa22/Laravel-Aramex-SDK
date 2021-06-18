@@ -1,6 +1,7 @@
 # Aramex-PHP-SDK
-
-Aramex open source Laravel SDK to integrate with Aramex API's.
+[![Packagist Downloads](https://img.shields.io/packagist/dt/octw/aramex?logo=packagist&logoColor=white) ](https://packagist.org/packages/octw/aramex)
+<br/>
+Open source Laravel SDK to integrate with Aramex API's.
 
 ## Installation 
 
