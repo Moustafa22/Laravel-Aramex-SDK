@@ -273,7 +273,11 @@ class AramexHelper
         else if (config('aramex.ENV') != 'LIVE'){
           throw new \Exception("Aramex ENV is invalid, Available values: 'TEST','LIVE' Check your config file 'config\aramex.php' ", 1);
         }
-        libxml_disable_entity_loader(false);
+
+        
+        if (\PHP_VERSION_ID < 80000) {
+            libxml_disable_entity_loader(true);
+        }
 
         switch ($type) {
             case self::SHIPPING:
