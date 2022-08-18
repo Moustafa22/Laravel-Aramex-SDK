@@ -330,9 +330,9 @@ composer require octw/aramex
   
 ``` php
     [
-        'line_1' => 'String|Required',
-        'line_2' => 'String',
-        'line_3' => 'String',
+        'line1' => 'String|Required',
+        'line2' => 'String',
+        'line3' => 'String',
         'city' => 'String|Required',
         'state_code' => 'String',
         'postal_code' => 'String',
@@ -366,13 +366,13 @@ composer require octw/aramex
   
 ``` php
         $originAddress = [
-            'line_1' => 'Test string',
+            'line1' => 'Test string',
             'city' => 'Amman',
             'country_code' => 'JO'
         ];
 
         $destinationAddress = [
-            'line_1' => 'Test String',
+            'line1' => 'Test String',
             'city' => 'Dubai',
             'country_code' => 'AE'
         ];
@@ -661,9 +661,9 @@ composer require octw/aramex
 ```php
   
   $data = Aramex::validateAddress([
-    'line_1':'Test', // optional (Passing it is recommended)
-    'line_2':'Test', // optional
-    'line_3':'Test', // optional
+    'line1':'Test', // optional (Passing it is recommended)
+    'line2':'Test', // optional
+    'line3':'Test', // optional
     'country_code':'JO',
     'postal_code':'', // optional
     'city':'Amman',
