@@ -149,8 +149,7 @@ class Core
 
                     'CashOnDeliveryAmount'  => [
                         'Value'         => $details->CashOnDeliveryAmount,
-                        'CurrencyCode'  => 'USD'
-                        // 'CurrencyCode'  => $details->CurrencyCode
+                        'CurrencyCode'  => $details->CurrencyCode
                     ],
                     
                     'InsuranceAmount'       => [
