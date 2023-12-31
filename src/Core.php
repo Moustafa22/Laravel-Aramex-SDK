@@ -197,7 +197,7 @@ class Core
                     'CashAdditionalAmountDescription' => $details->CashAdditionalAmountDescription,
 
                     'CustomsValueAmount'    => [
-                        'Value'         => 0,
+                        'Value'         => $details->CustomsValueAmount,
                         'CurrencyCode'  => $details->CurrencyCode
                     ],
 
