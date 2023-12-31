@@ -124,7 +124,7 @@ class Core
                         "Line2"             => $shipper->Line2,
                         "Line3"             => $shipper->Line3,
                         "City"              => $shipper->City,
-                        'StateOrProvinceCode' => config('aramex.shipperState'),
+                        'StateOrProvinceCode' => config('aramex.ShipperState'),
                         'PostCode'            => $shipper->ZipCode,
                         'CountryCode'         => $shipper->CountryCode,
                     ],
