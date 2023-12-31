@@ -5,17 +5,17 @@ namespace Octw\Aramex;
 
 /**
 *  The Core Class that contain the parameters array
-*  Usage : -Define an instance (it should call the constructor) 
+*  Usage : -Define an instance (it should call the constructor)
 *          -Define your ClientInfo (should be given by Aramex)
 *          -Call functions
 *          -Enjoy Coding !! ;)
 */
-class Core  
+class Core
 {
     protected $param;
     protected $soapClient;
     protected $accNum;
-    protected $accEnt; 
+    protected $accEnt;
     protected $accCntryCd;
     protected $accPin;
     protected $usrNm;
@@ -31,8 +31,8 @@ class Core
     // live https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc?singleWsdl
 
     /**
-     * Basically The Contsructor 
-     * @param : 1) None : will create the instance on test environment 
+     * Basically The Contsructor
+     * @param : 1) None : will create the instance on test environment
      *          2) ClientInfo : will create the instance on test or live environment (According to user ClientInfo credentials)
      */
     public function __construct()
@@ -66,7 +66,7 @@ class Core
         $this->psrd = config("aramex.".$this->env)['Password'];
         $this->ver = config("aramex.".$this->env)['Version'];
         $this->param['ClientInfo'] = config("aramex.".$this->env);
-        
+
     }
 
     public function initializeShipment($shipper , $consignee , $details)
@@ -74,11 +74,11 @@ class Core
         $this->param['Shipments'] = [
             [
                 'Shipper'   => [
-                    'Reference1'        => $details->ShipperReference, // for response              
+                    'Reference1'        => $details->ShipperReference, // for response
                     'AccountNumber' => $this->accNum,
                     'Contact'       => [
-                        'PersonName'            => $shipper->PersonName,
-                        'CompanyName'           => config('aramex.company_name'),
+                        'PersonName'            => config('aramex.PersonName'),
+                        'CompanyName'           => config('aramex.CompanyName'),
                         'PhoneNumber1'          => $shipper->PhoneNumber1,
                         'CellPhone'             => $shipper->CellPhone,
                         'EmailAddress'          => $shipper->EmailAddress,
@@ -96,52 +96,85 @@ class Core
                     ],
                 ],
                 'Consignee' => [
-                    'Reference1'        => $details->ConsgineeReference, // for response              
-                    'AccountNumber' => $this->accNum, //Account Number 
+                    'Reference1'        => $details->ConsgineeReference, // for response
+                    'AccountNumber' => $this->accNum, //Account Number
                     'Contact'       => [
-                        'PersonName'            => $consignee->PersonName,//Person Name 
+                        'PersonName'            => $consignee->PersonName,//Person Name
                         'CompanyName'           => $consignee->PersonName,
                         'PhoneNumber1'          => $consignee->PhoneNumber1, //Phone Number
-                        'CellPhone'             => $consignee->CellPhone, //Cell Phone 
+                        'CellPhone'             => $consignee->CellPhone, //Cell Phone
                         'EmailAddress'          => $consignee->EmailAddress, // Email
                     ],
                     'PartyAddress'  => [
-                        'Line1'                 => $consignee->Line1,//Line1 
-                        'Line2'                 => $consignee->Line2,//Line2 
+                        'Line1'                 => $consignee->Line1,//Line1
+                        'Line2'                 => $consignee->Line2,//Line2
                         'Line3'                 => $consignee->Line3,//Line3
                         'CountryCode'           => $consignee->CountryCode, // Country Code
                         'City'                  => $consignee->City,
                     ],
-                            
+
                 ],
+                'ThirdParty'=> [
+                    'Reference1'    => $details->ShipperReference,
+                    'Reference2'    => '',
+                    'AccountNumber' => $this->accNum,
+                    //Party Address
+                    'PartyAddress'  => [
+                        "Line1"             => $shipper->Line1,
+                        "Line2"             => $shipper->Line2,
+                        "Line3"             => $shipper->Line3,
+                        "City"              => $shipper->City,
+                        'StateOrProvinceCode' => config('aramex.shipperState'),
+                        'PostCode'            => $shipper->ZipCode,
+                        'CountryCode'         => $shipper->CountryCode,
+                    ],
+                    //Contact Info
+                    'Contact' => [
+                        'Department'      => '',
+                        'PersonName'      => $shipper->PersonName,
+                        'Title'           => '',
+                        'CompanyName'     => config('aramex.CompanyName'),
+                        'PhoneNumber1'    => $shipper->PhoneNumber1,
+                        'PhoneNumber1Ext' => '',
+                        'PhoneNumber2'    => '',
+                        'PhoneNumber2Ext' => '',
+                        'FaxNumber'       => '',
+                        'CellPhone'       => $shipper->CellPhone,
+                        'EmailAddress'    => $shipper->EmailAddress,
+                        'Type'            => ''
+                    ],
+                ],
+                'Reference1'  => $details->ShipperReference, // Should be Filled
                 'ShippingDateTime'  => $details->ShippingDateTime, // Should be Filled
                 "DueDate"           => $details->DueDate, // Should be Filled
                 "Comments"          => $details->Comments, //Should Be Filled
                 "PickupLocation"    => $details->PickupLocation, // Should be Filled
                 "Attachments"       => null,
                 "ForeignHAWB"       => null,
-                'Reference1'        => $details->Reference1, // for response              
+                'Reference1'        => $details->Reference1, // for response
                 "TransportType"     => 0,
                 "PickupGUID"        => $details->PickupGUID,
                 "Number"            => null,
-                'Details' => [        
+                'Details' => [
                     'ActualWeight' => [
                         'Value'                 => $details->ActualWeight,
                         'Unit'                  => 'Kg'
                     ],
-                    
+
+
                     'ProductGroup'          => $details->ProductGroup,
                     'ProductType'           => $details->ProductType,
                     'PaymentType'           => $details->PaymentType,
                     'PaymentOptions'        => $details->PaymentOptions, // it can be filled
                     'NumberOfPieces'        => $details->NumberOfPieces,
+                    'NumberOfPieces'        => $details->NumberOfPieces,
                     'DescriptionOfGoods'    => $details->DescriptionOfGoods,
                     'GoodsOriginCountry'    => $details->GoodsOriginCountry,
                     'Services'              => $details->Services,
-                    'Items'                 => $details->NumberOfPieces, 
-                    
+                    'Items'                 => $details->NumberOfPieces,
+
                     // Optionals Depending on Payment terms above
-                    
+
                     'CollectAmount'         => [
                         'Value'         => $details->CollectAmount,
                         'CurrencyCode'  => $details->CurrencyCode
@@ -151,20 +184,20 @@ class Core
                         'Value'         => $details->CashOnDeliveryAmount,
                         'CurrencyCode'  => $details->CurrencyCode
                     ],
-                    
+
                     'InsuranceAmount'       => [
                         'Value'         => $details->InsuranceAmount,
                         'CurrencyCode'  => $details->CurrencyCode
                     ],
-                    
+
                     'CashAdditionalAmount'  => [
                         'Value'         => $details->CashAdditionalAmount,
                         'CurrencyCode'  => $details->CurrencyCode
                     ],
                     'CashAdditionalAmountDescription' => $details->CashAdditionalAmountDescription,
-                    
+
                     'CustomsValueAmount'    => [
-                        'Value'         => $details->CustomsValueAmount,
+                        'Value'         => 0,
                         'CurrencyCode'  => $details->CurrencyCode
                     ],
 
@@ -175,7 +208,7 @@ class Core
     }
 
   //   public function fillShipperInfo($shipper) // Should be static (IDK)
-  //   {  
+  //   {
   //       $this->param['Shipments']['Shipment']['Shipper']['Contact']['PersonName'] = $shipper->name; // 'SomeName',
         // $this->param['Shipments']['Shipment']['Shipper']['Contact']['PhoneNumber1'] = $shipper->phone_number;// '077777',
         // $this->param['Shipments']['Shipment']['Shipper']['Contact']['CellPhone'] = $shipper->cell_phone_number;// '055555',
@@ -217,17 +250,17 @@ class Core
         // $this->param['Transaction']['Reference2'] = $ref2;
         // $this->param['Transaction']['Reference3'] = $ref3;
         // $time = strtotime('today midnight +12 hours +1 weeks'); // Must be changed
-        // $this->param['Shipments']['Shipment']['ShippingDateTime'] = $time + 96709; 
+        // $this->param['Shipments']['Shipment']['ShippingDateTime'] = $time + 96709;
   //   }
 
 
     public function initializePickup($pickupDetails, $pickupAddress){
 
-        $this->param['Pickup'] = [  
+        $this->param['Pickup'] = [
             'Reference1'=> $pickupDetails->Reference1,
             'Reference2'=> $pickupDetails->Reference1,
             'PickupLocation' =>$pickupDetails->PickupLocation,
-            'Status' => $pickupDetails->Status, 
+            'Status' => $pickupDetails->Status,
             'PickupDate' => $pickupDetails->PickupDate,
             'ReadyTime' => $pickupDetails->ReadyTime,
             'LastPickupTime' => $pickupDetails->LastPickupTime, // +26 hours
@@ -287,7 +320,7 @@ class Core
 
     public function initializeShipmentTracking( $param)
     {
-        $this->param['Shipments'] = $param; 
+        $this->param['Shipments'] = $param;
     }
 
     public function initializeFetchCountries($code = null)
