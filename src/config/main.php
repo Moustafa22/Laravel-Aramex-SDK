@@ -162,5 +162,5 @@ return [
 	'LabelInfo' => [
 		'ReportID' 		=> 9201,
 		'ReportType'	=> 'URL',
-	]
+	],
 ];
