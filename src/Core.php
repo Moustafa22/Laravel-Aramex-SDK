@@ -78,7 +78,7 @@ class Core
                     'AccountNumber' => $this->accNum,
                     'Contact'       => [
                         'PersonName'            => $shipper->PersonName,
-                        'CompanyName'           => $shipper->CompanyName,
+                        'CompanyName'           => config('aramex.company_name'),
                         'PhoneNumber1'          => $shipper->PhoneNumber1,
                         'CellPhone'             => $shipper->CellPhone,
                         'EmailAddress'          => $shipper->EmailAddress,
