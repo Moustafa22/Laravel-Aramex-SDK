@@ -144,7 +144,6 @@ class Core
                         'Type'            => ''
                     ],
                 ],
-                'Reference1'  => $details->ShipperReference, // Should be Filled
                 'ShippingDateTime'  => $details->ShippingDateTime, // Should be Filled
                 "DueDate"           => $details->DueDate, // Should be Filled
                 "Comments"          => $details->Comments, //Should Be Filled
