@@ -100,7 +100,7 @@ class Core
                     'AccountNumber' => $this->accNum, //Account Number
                     'Contact'       => [
                         'PersonName'            => $consignee->PersonName,//Person Name
-                        'CompanyName'           => $consignee->CompanyName,
+                        'CompanyName'           => $consignee->PersonName,
                         'PhoneNumber1'          => $consignee->PhoneNumber1, //Phone Number
                         'CellPhone'             => $consignee->CellPhone, //Cell Phone
                         'EmailAddress'          => $consignee->EmailAddress, // Email
@@ -133,7 +133,7 @@ class Core
                         'Department'      => '',
                         'PersonName'      => $shipper->PersonName,
                         'Title'           => '',
-                        'CompanyName'     => $shipper->CompanyName,
+                        'CompanyName'     => config('aramex.company_name'),
                         'PhoneNumber1'    => $shipper->PhoneNumber1,
                         'PhoneNumber1Ext' => '',
                         'PhoneNumber2'    => '',
