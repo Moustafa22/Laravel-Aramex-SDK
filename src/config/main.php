@@ -163,14 +163,4 @@ return [
 		'ReportID' 		=> 9201,
 		'ReportType'	=> 'URL',
 	],
-
-	/**
-	 *	 Shipper State 
-	 */
-	'ShipperState' => 'Qassim',
-	
-	/**
-	 *	 Shipper Name 
-	 */
-   	 'PersonName' => 'Sulaiman'
 ];
