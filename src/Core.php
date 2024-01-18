@@ -77,8 +77,8 @@ class Core
                     'Reference1'        => $details->ShipperReference, // for response
                     'AccountNumber' => $this->accNum,
                     'Contact'       => [
-                        'PersonName'            => config('aramex.PersonName'),
-                        'CompanyName'           => config('aramex.CompanyName'),
+                        'PersonName'            => $shipper->PersonName,
+                        'CompanyName'           => $shipper->CompanyName,
                         'PhoneNumber1'          => $shipper->PhoneNumber1,
                         'CellPhone'             => $shipper->CellPhone,
                         'EmailAddress'          => $shipper->EmailAddress,
@@ -100,7 +100,7 @@ class Core
                     'AccountNumber' => $this->accNum, //Account Number
                     'Contact'       => [
                         'PersonName'            => $consignee->PersonName,//Person Name
-                        'CompanyName'           => $consignee->PersonName,
+                        'CompanyName'           => $consignee->CompanyName,
                         'PhoneNumber1'          => $consignee->PhoneNumber1, //Phone Number
                         'CellPhone'             => $consignee->CellPhone, //Cell Phone
                         'EmailAddress'          => $consignee->EmailAddress, // Email
@@ -124,7 +124,7 @@ class Core
                         "Line2"             => $shipper->Line2,
                         "Line3"             => $shipper->Line3,
                         "City"              => $shipper->City,
-                        'StateOrProvinceCode' => config('aramex.ShipperState'),
+//                        'StateOrProvinceCode' => config('aramex.ShipperState'),
                         'PostCode'            => $shipper->ZipCode,
                         'CountryCode'         => $shipper->CountryCode,
                     ],
@@ -133,7 +133,7 @@ class Core
                         'Department'      => '',
                         'PersonName'      => $shipper->PersonName,
                         'Title'           => '',
-                        'CompanyName'     => config('aramex.CompanyName'),
+                        'CompanyName'     => $shipper->CompanyName,
                         'PhoneNumber1'    => $shipper->PhoneNumber1,
                         'PhoneNumber1Ext' => '',
                         'PhoneNumber2'    => '',
